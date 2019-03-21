@@ -16,7 +16,7 @@ public class MatchGameViewController : UIViewController{
         self.view.backgroundColor = #colorLiteral(red: 0.2509803922, green: 0.03529411765, blue: 0.4352941176, alpha: 1)
         
         let collectionView = UICollectionView(frame: CGRect(x: 100, y: 80, width: 600, height: 400), collectionViewLayout: UICollectionViewFlowLayout())
-        
+        collectionView.backgroundColor = #colorLiteral(red: 0.2509803922, green: 0.03529411765, blue: 0.4352941176, alpha: 1)
 
         self.collectionView = collectionView
 
@@ -50,18 +50,33 @@ public class MatchGameViewController : UIViewController{
         print("criou célula")
         
         let card = cardArray[indexPath.row]
-        print(cardArray)
         
         cell.setCard(card: card)
-        print("SE CHEGAR AQUI EH PORQUE FUNCIONOU PORRA")
         return cell
     }
 }
 
  extension MatchGameViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let cell = collectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+        
+        let card = cardArray[indexPath.row]
+        
+        print(card.imageName + " foi clicada")
+        if card.isFlipped == false{
+            print("virou")
+            cell.flip()
+            card.isFlipped = true
+        
+        }else{
+            print("desvirou")
+
+            cell.flipBack()
+            card.isFlipped = false
+        
+        }
     }
 }
 

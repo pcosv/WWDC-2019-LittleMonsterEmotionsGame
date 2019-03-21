@@ -10,7 +10,7 @@ public class CardModel {
             let randomNumber = arc4random_uniform(8) + 1
             
             let card = Card()
-            card.imageName = "card\(randomNumber).jpg"
+            card.imageName = "card\(randomNumber).png"
             generatedCardsArray.append(card)
 
             print(card)
