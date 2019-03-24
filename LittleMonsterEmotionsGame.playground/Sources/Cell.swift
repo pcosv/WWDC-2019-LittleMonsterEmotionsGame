@@ -13,10 +13,10 @@ public class CardCollectionViewCell: UICollectionViewCell {
         self.front = UIImageView(image:  UIImage(named: card.imageName))
         self.backgroundView = back
         
-        if card.imageName == "card1.png" || card.imageName == "card2.png" || card.imageName == "card3.png" || card.imageName == "card4.png"{
-            self.back = UIImageView(image:  UIImage(named: "backMonster.png"))
+        if card.imageName == "images/card1.png" || card.imageName == "images/card2.png" || card.imageName == "images/card3.png" || card.imageName == "images/card4.png"{
+            self.back = UIImageView(image:  UIImage(named: "images/backMonster.png"))
         } else{
-            self.back = UIImageView(image:  UIImage(named: "backSong.png"))
+            self.back = UIImageView(image:  UIImage(named: "images/backSong.png"))
         }
         
         if card.isMatched == true{
@@ -46,8 +46,8 @@ public class CardCollectionViewCell: UICollectionViewCell {
     
     public func flipBack() {
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            UIView.transition(from: self.front, to: self.back, duration: 0.8, options: [.showHideTransitionViews, .transitionFlipFromLeft], completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+            UIView.transition(from: self.front, to: self.back, duration: 1.5, options: [.showHideTransitionViews, .transitionFlipFromLeft], completion: nil)
             self.backgroundView = self.back
         }
         
@@ -56,7 +56,7 @@ public class CardCollectionViewCell: UICollectionViewCell {
     public func remove(){
         back.alpha = 0
         
-        UIView.animate(withDuration: 2, delay: 0.9, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1.5, delay: 2, options: .curveEaseOut, animations: {
             self.front.alpha = 0
 
         }, completion: nil)

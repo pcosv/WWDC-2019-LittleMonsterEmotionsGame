@@ -14,41 +14,48 @@ public class CardModel {
             
             // sad
             if numbers[aux] == 1 || numbers[aux] == 5{
-                let card = Card(imageName: "card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .sadness)
+                let card = Card(imageName: "images/card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .sadness)
                 generatedCardsArray.append(card)
                 
                 if numbers[aux] == 5{
                     card.songName = "sad"
+                    // Music: https://www.purple-planet.com/
                 }
 
                 
             // happy
             }else if numbers[aux] == 2 || numbers[aux] == 6{
-                let card = Card(imageName: "card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .happiness)
+                let card = Card(imageName: "images/card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .happiness)
                 generatedCardsArray.append(card)
                 
                 if numbers[aux] == 6{
                     card.songName = "happy"
+                    // Music: https://www.purple-planet.com/
+
                 }
 
                 
             // relaxed
             }else if numbers[aux] == 3 || numbers[aux] == 7{
-                let card = Card(imageName: "card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .chill)
+                let card = Card(imageName: "images/card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .chill)
                 generatedCardsArray.append(card)
                 
                 if numbers[aux] == 7{
                     card.songName = "relaxed"
+                    // Music: https://www.purple-planet.com/
+
                 }
 
                 
             // motivated
             }else{
-                let card = Card(imageName: "card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .motivation)
+                let card = Card(imageName: "images/card\(numbers[aux]).png", isFlipped: false, isMatched: false, emotion: .motivation)
                 generatedCardsArray.append(card)
                 
                 if numbers[aux] == 8{
                     card.songName = "motivated"
+                    // Music: https://www.purple-planet.com/
+
                 }
                 
             }

@@ -13,7 +13,7 @@ public class MatchGameViewController : UIViewController{
     public var songPlayer = AVAudioPlayer()
     
     var firstFlippedCard: IndexPath?
-    let hi = UILabel()
+    let instruction = UILabel()
  
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +33,14 @@ public class MatchGameViewController : UIViewController{
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         
-        hi.frame = CGRect(x: 80, y: 430, width: 600, height: 100)
-        hi.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
-        hi.text = "choose a song card"
-        hi.font = UIFont(name: "KeepCalm-Medium", size: 30)
-        hi.numberOfLines = 0
-        hi.lineBreakMode = .byWordWrapping
-        hi.textAlignment = NSTextAlignment.center
-        hi.textColor = #colorLiteral(red: 0.9882352941, green: 0.9725490196, blue: 0.9294117647, alpha: 1)
-        view.addSubview(hi)
+        instruction.frame = CGRect(x: 80, y: 430, width: 600, height: 100)
+        instruction.text = "choose a song card"
+        instruction.font = UIFont(name: "KeepCalm-Medium", size: 30)
+        instruction.numberOfLines = 0
+        instruction.lineBreakMode = .byWordWrapping
+        instruction.textAlignment = NSTextAlignment.center
+        instruction.textColor = #colorLiteral(red: 0.9882352941, green: 0.9725490196, blue: 0.9294117647, alpha: 1)
+        view.addSubview(instruction)
 
         self.view.addSubview(collectionView)
         
@@ -104,31 +103,42 @@ extension MatchGameViewController: UICollectionViewDelegate {
         
         let card = cardArray[indexPath.row]
         
-        if card.isFlipped == false && card.isMatched == false{
-            cell.flip()
-            card.isFlipped = true
-            
-            // play song
-            if card.songName != ""{
-                prepareSongAndSession(song: card.songName)
-                playSong()
-            }
-            
-            if firstFlippedCard == nil{
-                firstFlippedCard = indexPath
-            } else{
-                checkForMatches(secondFlippedCard: indexPath)
-            }
-        }else{
-            cell.flipBack()
-            card.isFlipped = false
-            firstFlippedCard = nil
-            
-            if card.songName != ""{
-                prepareSongAndSession(song: card.songName)
-                pause()
+        if (card.imageName == "images/card1.png" && firstFlippedCard == nil) || (card.imageName == "images/card2.png" && firstFlippedCard == nil) || (card.imageName == "images/card3.png" && firstFlippedCard == nil) || (card.imageName == "images/card4.png" && firstFlippedCard == nil) {
+            instruction.text = "first, choose a song card"
+        } else{
+            if card.isFlipped == false && card.isMatched == false{
+                cell.flip()
+                card.isFlipped = true
+                
+                // play song
+                if card.songName != ""{
+                    prepareSongAndSession(song: card.songName)
+                    playSong()
+                }
+                
+                if firstFlippedCard == nil{
+                    firstFlippedCard = indexPath
+                    instruction.text = "look for Lilo who is feeling this way"
+                } else{
+                    checkForMatches(secondFlippedCard: indexPath)
+                }
+            }else{
+                cell.flipBack()
+                card.isFlipped = false
+                firstFlippedCard = nil
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5) {
+                    self.instruction.text = "choose a song card"
+                }
+                
+                if card.songName != ""{
+                        self.prepareSongAndSession(song: card.songName)
+                        self.pause()
+                    
+                }
             }
         }
+        
+
     
     }
     
@@ -147,6 +157,11 @@ extension MatchGameViewController: UICollectionViewDelegate {
             cardTwoCell.remove()
             
             checkGameEnded()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+                self.instruction.text = "yeah! choose another song card"
+            }
+            
+            
         }else{
             cardOne.isFlipped = false
             cardTwo.isFlipped = false
@@ -154,15 +169,21 @@ extension MatchGameViewController: UICollectionViewDelegate {
             cardOneCell.flipBack()
             cardTwoCell.flipBack()
             
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5) {
+                self.instruction.text = "choose a song card"
+            }
+
+            
         }
         
         if cardOne.songName != ""{
-            prepareSongAndSession(song: cardOne.songName)
-            pause()
+            
+            self.prepareSongAndSession(song: cardOne.songName)
+            self.pause()
         }
         if cardTwo.songName != ""{
-            prepareSongAndSession(song: cardTwo.songName)
-            pause()
+            self.prepareSongAndSession(song: cardTwo.songName)
+            self.pause()
         }
         
         if cardOneCell == nil{
@@ -183,8 +204,14 @@ extension MatchGameViewController: UICollectionViewDelegate {
         }
         
         if isWon == true{
-            // apresentar view de vitória com botão de reiniciar o jogo
-            print("ganhou")
+            
+            self.instruction.text = ""
+            let end = MyViewControllerEnd()
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+                self.present(end, animated: true, completion: nil)
+
+            }
         }
         
         
